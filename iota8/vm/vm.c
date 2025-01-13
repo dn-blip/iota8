@@ -18,3 +18,24 @@
 #define FL(i) (((i)>>11)&1)
 #define BR(i) (((i)>>6)&0x7)
 #define TRP(i) ((i)&0xFF)
+
+uint16_t PC_START = 0x3000;
+uint16_t mem[UINT16_MAX+1] = {0};
+static inline uint16_t iotamr(uint16_t address) { return mem[address]; }
+static inline void iotamw(uint16_t address, uint_16 val) { mem[address] = val; }
+
+enum regist { R0 = 0; R1, R2, R3, R4, R5, R6, R7, RPC, RCND, RCNT, };
+uint16_t reg[RCNT] = {0};
+
+typedef void (*op_ex_f)(uint16_t instruction);
+//
+// ... other operations here
+//
+static inline void add(uint16_t i)  { /* code here */ }
+static inline void and(uint16_t i)  { /* code here */ }
+//
+// ... other operations here
+//
+op_ex_f op_ex[NOPS] = { 
+    br, add, ld, st, jsr, and, ldr, str, rti, not, ldi, sti, jmp, res, lea, trap 
+};
